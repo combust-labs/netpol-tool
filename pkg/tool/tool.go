@@ -7,7 +7,6 @@ import (
 	networkingv1 "k8s.io/api/networking/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/labels"
-	"k8s.io/apimachinery/pkg/selection"
 	"k8s.io/apimachinery/pkg/types"
 )
 
@@ -93,18 +92,4 @@ func Do(source types.NamespacedName, args *Args) error {
 
 	return nil
 
-}
-
-func selectorFromRequirements(s labels.Selector, lsr []metav1.LabelSelectorRequirement) (labels.Selector, error) {
-	for _, labelSelectorRequirement := range lsr {
-		requirement, err := labels.NewRequirement(
-			labelSelectorRequirement.Key,
-			selection.Operator(labelSelectorRequirement.Operator),
-			labelSelectorRequirement.Values)
-		if err != nil {
-			return nil, err
-		}
-		s.Add(*requirement)
-	}
-	return s, nil
 }
