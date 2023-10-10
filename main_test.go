@@ -147,11 +147,11 @@ func TestOne(t *testing.T) {
 	assert.Equal(t, len(fixture_network_policies.Items), len(loaded_netpols.Items))
 	assert.Equal(t, len(fixture_pods.Items), len(loaded_pods.Items))
 
-	doErr := tool.Do(types.NamespacedName{}, &tool.Args{
+	doErr := tool.NewProcessor(&tool.Args{
 		Namespaces:      loaded_namespaces.Items,
 		NetworkPolicies: loaded_netpols.Items,
 		Pods:            loaded_pods.Items,
-	})
+	}).Do(types.NamespacedName{})
 
 	assert.Nil(t, doErr)
 
